@@ -43,7 +43,7 @@ const uploadFile = asyncHandler(async(req,res) => {
             .json(
                 new ApiResponse(
                     200,
-                    file.url,
+                    file.secure_url,
                     "File successfully uploaded"
                 )
             )

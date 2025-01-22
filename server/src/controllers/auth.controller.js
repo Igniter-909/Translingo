@@ -134,7 +134,7 @@ const updateAvatar = asyncHandler(async(req,res) => {
         const user = await User.findByIdAndUpdate(
             userId,
             {
-                avatar:avatar.url
+                avatar:avatar.secure_url
             },
             {new:true}
         )
