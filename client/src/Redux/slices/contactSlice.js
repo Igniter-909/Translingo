@@ -66,6 +66,7 @@ const contactSlice = createSlice({
           action.payload.sender._id === userId
             ? action.payload.recipient._id
             : action.payload.sender._id;
+          
       
         const formData =
           action.payload.sender._id === userId
@@ -85,17 +86,21 @@ const contactSlice = createSlice({
           // Add the new contact at the top if not already present
           state.contacts.unshift(formData);
         }
+        clearLocalStrorage();
       },      
       setDirectMessagesContacts: (state, action) => {
         state.directMessagesContacts = action.payload;
+        clearLocalStrorage();
       },
   },
   extraReducers: (builder) => {
     builder.addCase(getSearchedContacts.fulfilled, (state, action) => {
       state.contacts = action.payload?.data;
+      clearLocalStrorage();
     });
     builder.addCase(getDirectMessagesContacts.fulfilled, (state, action) => {
       state.directMessagesContacts = action.payload.data;
+      clearLocalStrorage();
     });
   },
 });

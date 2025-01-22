@@ -8,6 +8,13 @@ const initialState = {
     userInfo: localStorage.getItem('userInfo') != undefined ? JSON.parse(localStorage.getItem('userInfo')) : {},
 };
 
+export const clearLocalStrorage = () => {
+    if(localStorage.getItem('isLoggedIn') === undefined){
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("userInfo");
+    }
+}
+
 export const signupUser = createAsyncThunk(
     "auth/signup",
     async(data) => {
@@ -142,28 +149,34 @@ const authSlice = createSlice(
                 localStorage.setItem("userInfo",JSON.stringify(action.payload))
                 state.isLoggedIn = true;
                 state.userInfo = action.payload?.data?.user;
+                clearLocalStrorage();
             })
             builder.addCase(updateUserDetails.fulfilled,(state,action) => {
                 localStorage.setItem("userInfo",JSON.stringify(action.payload))
                 state.userInfo = action.payload?.data;
+                clearLocalStrorage();
             })
             builder.addCase(updateUserAvatar.fulfilled,(state,action) => {
                 localStorage.setItem("userInfo",JSON.stringify(action.payload))
                 state.userInfo = action.payload?.data;
+                clearLocalStrorage();
             })
             builder.addCase(getUserDetails.fulfilled,(state,action) => {
                 localStorage.setItem("userInfo",JSON.stringify(action.payload))
                 state.userInfo = action.payload?.data;
+                clearLocalStrorage();
             })
             builder.addCase(deleteAvatar.fulfilled,(state,action) => {
                 localStorage.setItem("userInfo",JSON.stringify(action.payload))
                 state.userInfo = action.payload?.data;
+                clearLocalStrorage();
             })
             builder.addCase(logoutUser.fulfilled,(state,action) => {
                 localStorage.removeItem("isLoggedIn");
                 localStorage.removeItem("userInfo");
                 state.isLoggedIn = false;
                 state.userInfo = {};
+                clearLocalStrorage();
             })
         }
     }

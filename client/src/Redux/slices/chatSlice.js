@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import {toast} from "sonner"
 import axiosInstance, {} from "../../lib/axiosInstance.js"
 import { GETCHANNELMESSAGES, GETMESSAGE, UPLOADFILE } from "../../utils/constants.js"
+import { clearLocalStrorage } from "./authSlice.js"
 
 const initialState = {
     selectedChatType: undefined,
@@ -55,12 +56,15 @@ const chatSlice = createSlice({
     reducers:{
         setSelectedChatType: (state,action) => {
             state.selectedChatType = action.payload
+            clearLocalStrorage();
         },
         setSelectedChatData: (state,action) => {
             state.selectedChatData = action.payload
+            clearLocalStrorage();
         },
         setSelectedChatMessages: (state,action) => {
             state.selectedChatMessages = action.payload
+            clearLocalStrorage();
         },
         addChatMessage: (state,action) => {
             state.selectedChatMessages.push({
@@ -72,19 +76,23 @@ const chatSlice = createSlice({
                     action.payload.sender :
                     action.payload.sender._id,
             })
+            clearLocalStrorage();
         },
         closeChat: (state) => {
             state.selectedChatType = undefined
             state.selectedChatData = undefined
             state.selectedChatMessages = []
+            clearLocalStrorage();
         }
     },
     extraReducers: (builder) => {
         builder.addCase(getAllMessages.fulfilled,(state,action) => {
             state.selectedChatMessages = action.payload?.data
+            clearLocalStrorage();
         })
         builder.addCase(getChannelMessagesData.fulfilled,(state,action) => {
             state.selectedChatMessages = action.payload?.data
+            clearLocalStrorage();
         })
     }
 })
