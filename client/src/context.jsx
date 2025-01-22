@@ -40,7 +40,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (userInfo) {
-      const SOCKET_SERVER_URL = "http://localhost:3000";
+      const SOCKET_SERVER_URL = "https://translingo-pcgl.onrender.com";
       
       socket.current = io(SOCKET_SERVER_URL, {
         withCredentials: true,
