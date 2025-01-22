@@ -54,6 +54,7 @@ function Chats() {
         },
       })
       const fileName = filePath.split("/").pop()
+      console.log("Response",response)
       saveAs(response.data, fileName)
     } catch (error) {
       console.error("Error downloading the file: ", error)
