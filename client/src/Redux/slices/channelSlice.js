@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axiosInstance from "../../lib/axiosInstance";
 import { ADDMEMBERTOCHANNEL, CREATECHANNEL, DELETECHANNEL, GETUSERCHANNELS, REMOVEMEMBERFROMCHANNEL } from "../../utils/constants";
 import { toast } from "sonner";
-import { clearLocalStrorage  } from "./authSlice";
 
 const initialState = {
     channels:[]
@@ -97,16 +96,13 @@ const channelSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createNewChannel.fulfilled, (state,action) => {
             state.channels.push(action.payload?.data)
-            clearLocalStrorage();
         })
         builder.addCase(getUserChannels.fulfilled,(state,action)=>{
             state.channels = action.payload?.data
-            clearLocalStrorage();
         })
         builder.addCase(deleteChannel.fulfilled,(state,action) => {
             const {channelId} = action.payload;
             state.channels = state.channels.filter((channel) => channel._id !== channelId)
-            clearLocalStrorage();
         })
         builder.addCase(addMember.fulfilled,(state,action) => {
             const channelId = action.payload.data?._id;
@@ -118,7 +114,6 @@ const channelSlice = createSlice({
                 state.channels.unshift(channel);
             }
             state.channels[existingChannelIndex].members = action.payload.data.members;
-            clearLocalStrorage();
         })
     }
  
